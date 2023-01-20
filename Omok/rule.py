@@ -1,78 +1,82 @@
-from game import Game
 class Rule():
-    def __init__(self, args, lst):
+    def __init__(self):
+        self.result = False
         self.stone_half = 29
-        self.args = args
-        self.x_right = args[0]
-        self.x_left = args[0]
-        self.y_top = args[1]
-        self.y_bottom = args[1]
-        self.both_side(lst)
-        self.up_and_down(lst)
-        self.right_diagonal(lst)
-        self.left_diagonal(lst)
+
+    def is_omok(self, args, lst):
+        x_right = args[0]
+        x_left = args[0]
+        y_top = args[1]
+        y_bottom = args[1]
         
-
-    def both_side(self, lst): 
+        # both_side 
         count = 1
         for _ in range(4):
-            if ((self.x_right + self.stone_half, self.args[1])) in lst:
+            if ((x_right + self.stone_half, args[1])) in lst:
                 count += 1
-                self.x_right += self.stone_half
+                x_right += self.stone_half
             else:
                 break
         for _ in range(4):
-            if ((self.x_left - self.stone_half, self.args[1])) in lst:
+            if ((x_left - self.stone_half, args[1])) in lst:
                 count += 1
-                self.x_left -= self.stone_half
+                x_left -= self.stone_half
             else:
                 break
+        if count == 5:
+            self.result = True
 
-    def up_and_down(self, lst):
+        # up and down
         count = 1
         for _ in range(4):
-            if ((self.args[0], self.y_top - self.stone_half)) in lst:
+            if ((args[0], y_top - self.stone_half)) in lst:
                 count += 1
-                self.y_top -= self.stone_half
+                y_top -= self.stone_half
             else:
                 break
         for _ in range(4):
-            if ((self.args[0], self.y_bottom + self.stone_half)) in lst:
+            if ((args[0], y_bottom + self.stone_half)) in lst:
                 count += 1
-                self.y_bottom += self.stone_half
+                y_bottom += self.stone_half
             else:
                 break
+        if count == 5:
+            self.result = True
 
-    def right_diagonal(self, lst):
+        # right_diagonal
         count = 1
         for _ in range(4):
-            if ((self.x_right + self.stone_half, self.y_top - self.stone_half)) in lst:
+            if ((x_right + self.stone_half, y_top - self.stone_half)) in lst:
                 count += 1
-                self.x_right += self.stone_half
-                self.y_top -= self.stone_half
+                x_right += self.stone_half
+                y_top -= self.stone_half
             else:
                 break
         for _ in range(4):
-            if ((self.x_left - self.stone_half, self.y_bottom + self.stone_half)) in lst:
+            if ((x_left - self.stone_half, y_bottom + self.stone_half)) in lst:
                 count += 1
-                self.x_left -= self.stone_half
-                self.y_bottom += self.stone_half
+                x_left -= self.stone_half
+                y_bottom += self.stone_half
             else:
                 break
+        if count == 5:
+            self.result = True
         
-    def left_diagonal(self, lst):
+        # left_diagonal
         count = 1
         for _ in range(4):
-            if ((self.x_left - self.stone_half, self.y_top - self.stone_half)) in lst:
+            if ((x_left - self.stone_half, y_top - self.stone_half)) in lst:
                 count += 1
-                self.x_left -= self.stone_half
-                self.y_top -= self.stone_half
+                x_left -= self.stone_half
+                y_top -= self.stone_half
             else:
                 break
         for _ in range(4):
-            if ((self.x_right + self.stone_half, self.y_bottom + self.stone_half)) in lst:
+            if ((x_right + self.stone_half, y_bottom + self.stone_half)) in lst:
                 count += 1
-                self.x_right += self.stone_half
-                self.y_bottom += self.stone_half
+                x_right += self.stone_half
+                y_bottom += self.stone_half
             else:
                 break
+        if count == 5:
+            self.result = True

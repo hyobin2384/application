@@ -1,29 +1,21 @@
-import pygame
 from game import Game
+from rule import Rule
 
-turn = 0
-running = True
-
-pygame.init()
 g = Game()
-pygame.display.set_caption("Omok")
+r = Rule()
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        
-        # 한 칸당 29정도
-        # screen.blit(black_stone,(58,29)) 
-        # screen.blit(white_stone,(29,29))
-        if event.type == pygame.MOUSEBUTTONUP:
-            if turn == 0:
-                g.blit_black_stoen()
-                turn = 1
-            elif turn == 1:
-                g.blit_white_stoen()
-                turn = 0
-        # if event.type == pygame.MOUSEBUTTONUP:
-        #     ...
-        pygame.display.update()
-pygame.quit()
+while g.running:
+    for event in g.event_get():
+        if g.event_loop(event):
+            g.running = False
+        if g.mouse_click(event):
+            if g.draw_possible_stone():
+                g.draw_stone()
+                if g.turn == 0:
+                    r.is_omok(g.mouse_position(), g.used_black_coordinates)
+                else:
+                    r.is_omok(g.mouse_position(),g.used_white_coordinates)
+                g.finish_game_mode(r.result)
+                g.turn = (g.turn+1)%2     
+    g.update()
+g.finish()
